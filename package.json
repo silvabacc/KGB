@@ -1,0 +1,27 @@
+{
+  "name": "kgb",
+  "version": "1.0.0",
+  "description": "Discord bot that is definitely not monitoring and logging your hours",
+  "scripts": {
+    "dev": "nodemon src/app.ts --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "k-h-f",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "typescript": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "eslint": "^8.14.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "ts-node": "^10.7.0",
+    "yarn": "^1.22.18"
+  }
+}

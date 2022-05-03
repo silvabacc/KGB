@@ -1,4 +1,4 @@
-# KGB
+# Kerry Gobby Bergerson
 Discord bot that is definitely not monitoring and logging your hours
 
 # Prerequisites

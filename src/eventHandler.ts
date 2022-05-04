@@ -1,4 +1,11 @@
 import { Client, VoiceState } from 'discord.js';
+import { TimestampBody } from '../api/src/types';
+import { timestampRequest } from './httpService/http';
+
+enum Status {
+  CONNECTED = 'CONNECTED',
+  DISCONNECTED = 'DISCONNECTED'
+}
 
 /**
  * EventHandler handles all Discord events in one place by taking a Discord client and attaches
@@ -49,10 +56,15 @@ class EventHandler {
   voiceStateUpdate() {
     this.client.on(
       'voiceStateUpdate',
-      (oldState: VoiceState, newState: VoiceState) => {
-        console.log(
-          `oldState ${JSON.stringify(oldState)}, newState ${newState}`
-        );
+      async (oldState: VoiceState, newState: VoiceState) => {
+        const requestBody: TimestampBody = {
+          username: oldState.member?.displayName || '',
+          timestamp: new Date().getTime(),
+          status:
+            newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED
+        };
+        const response = await timestampRequest(requestBody);
+        console.log(response);
       }
     );
   }

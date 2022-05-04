@@ -1,5 +1,5 @@
 export interface TimestampBody {
   username: string;
-  timestamp: string;
+  timestamp: number;
   status: string;
 }

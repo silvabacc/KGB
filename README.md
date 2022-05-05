@@ -1,6 +1,8 @@
 # Kerry Gobby Bergerson (WIP)
 Discord bot that is definitely not monitoring and logging your hours
 
+This repoistory contains two node.js applications, the bot (at root project) and the api (inside `api` folder). 
+
 # Prerequisites
 * Node v16.15.0
 
@@ -20,5 +22,6 @@ Discord bot that is definitely not monitoring and logging your hours
 
 # Linting
 * Using ESLint and Prettier for formatting
+* Both projects have linting
 * Run `npm run lint` or `yarn lint` for manual linting
 

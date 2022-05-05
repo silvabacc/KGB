@@ -14,7 +14,7 @@ Discord bot that is definitely not monitoring and logging your hours
 1. Go into `api` folder
 2. Install dependecies via `npm install`
 3. Create an .env file and copy the values from env.defaults
-   * Default port is usally `4000`
+   * Default port is `4000`
 4. Run the application either by `npm run dev` or `yarn dev`
    * Ensure that you're in the `api` directory before starting
 

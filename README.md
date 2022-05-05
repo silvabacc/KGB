@@ -1,7 +1,11 @@
 # Kerry Gobby Bergerson (WIP)
 Discord bot that is definitely not monitoring and logging your hours
 
-This repoistory contains two node.js applications, the bot (at root project) and the api (inside `api` folder). 
+## Structure of KGB
+![image](https://user-images.githubusercontent.com/47926269/167037675-64422691-427d-4c14-a1fe-06ba20603cb3.png)
+
+This repoistory contains two node.js applications, which are the `KGB Application` and `Backend API`. You can find the `KGB Application` at the root of this repository and the `Backend Api` inside `api` folder.
+
 
 # Prerequisites
 * Node v16.15.0

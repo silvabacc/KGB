@@ -4,7 +4,8 @@
   "description": "Backend for the KGB application",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.ts --watch"
+    "dev": "nodemon src/app.ts --watch",
+    "lint": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -12,6 +13,7 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.0",
     "express": "^4.18.1",
+    "joi": "^17.6.0",
     "typescript": "^4.6.4"
   },
   "devDependencies": {

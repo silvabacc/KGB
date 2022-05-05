@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon src/app.ts --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts --fix"
   },
   "author": "k-h-f",
   "license": "ISC",

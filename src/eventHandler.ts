@@ -1,6 +1,8 @@
 import { Client, VoiceState } from 'discord.js';
 import { TimestampBody } from '../api/src/types';
-import { timestampRequest } from './httpService/http';
+import { getConfig } from './config/getConfig';
+import { httpRequest } from './httpService/http';
+const { KGB_API_URL } = getConfig();
 
 enum Status {
   CONNECTED = 'CONNECTED',
@@ -63,7 +65,10 @@ class EventHandler {
           status:
             newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED
         };
-        const response = await timestampRequest(requestBody);
+        const response = await httpRequest(
+          `${KGB_API_URL}/timestamp`,
+          requestBody
+        );
         console.log(response);
       }
     );

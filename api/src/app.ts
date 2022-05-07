@@ -1,6 +1,6 @@
 import express from 'express';
 import routes from './routes';
-import { getConfig } from '../../src/config/getConfig';
+import { getConfig } from './getConfig';
 
 const { PORT } = getConfig();
 

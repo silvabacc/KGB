@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.ts --watch",
+    "start": "ts-node src/app.ts",
     "lint": "eslint . --ext .ts --fix"
   },
   "dependencies": {

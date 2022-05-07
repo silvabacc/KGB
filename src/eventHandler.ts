@@ -69,7 +69,6 @@ class EventHandler {
           `${KGB_API_URL}/timestamp`,
           requestBody
         );
-        console.log(response);
       }
     );
   }

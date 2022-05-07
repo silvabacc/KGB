@@ -1,10 +1,5 @@
-import { initializeApp, applicationDefault, cert } from 'firebase-admin/app';
-import {
-  getFirestore,
-  Timestamp,
-  FieldValue,
-  Firestore
-} from 'firebase-admin/firestore';
+import { initializeApp, cert } from 'firebase-admin/app';
+import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import serviceAccount from './gcp-service-account.json';
 import { ServiceAccount } from 'firebase-admin/app';
 import { TimestampData } from './dto';

@@ -8,7 +8,7 @@ export const httpRequest = async (url: string, body: TimestampBody) => {
     const response = await axios.post(url, body);
     return ResponseMessage.SUCCESS;
   } catch (err: AxiosError | any) {
-    console.log(err.response.data);
+    console.log(err);
     return ResponseMessage.ERROR;
   }
 };

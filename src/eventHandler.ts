@@ -1,7 +1,7 @@
 import { Client, VoiceState } from 'discord.js';
-import { TimestampBody } from '../api/src/types';
 import { getConfig } from './config/getConfig';
 import { httpRequest } from './httpService/http';
+import { TimestampBody } from './httpService/types';
 const { KGB_API_URL } = getConfig();
 
 enum Status {

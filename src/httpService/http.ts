@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
-import { TimestampBody } from '../../api/src/types';
 import { getConfig } from '../config/getConfig';
 import { ResponseMessage } from './responseMessages';
+import { TimestampBody } from './types';
 
 export const httpRequest = async (url: string, body: TimestampBody) => {
   try {

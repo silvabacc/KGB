@@ -4,6 +4,7 @@
   "description": "Discord bot that is definitely not monitoring and logging your hours",
   "scripts": {
     "dev": "nodemon src/app.ts --watch",
+    "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts --fix"
   },

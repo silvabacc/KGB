@@ -3,6 +3,9 @@ import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import serviceAccount from './gcp-service-account.json';
 import { ServiceAccount } from 'firebase-admin/app';
 import { TimestampData } from './dto';
+import { getConfig } from '../getConfig';
+
+const { GCP_PROJECT_ID, GCP_PRIVATE_KEY, GCP_CLIENT_EMAIL } = getConfig();
 
 export class DatabaseService {
   private static databaseService: DatabaseService;
@@ -10,7 +13,11 @@ export class DatabaseService {
 
   private constructor() {
     initializeApp({
-      credential: cert(serviceAccount as ServiceAccount)
+      credential: cert({
+        projectId: GCP_PROJECT_ID,
+        privateKey: GCP_PRIVATE_KEY,
+        clientEmail: GCP_CLIENT_EMAIL
+      } as ServiceAccount)
     });
 
     this.db = getFirestore();
@@ -18,7 +25,7 @@ export class DatabaseService {
 
   addNewTimestamp(addNewTimestampData: TimestampData) {
     const { username, timestamp, status } = addNewTimestampData;
-    this.db
+    return this.db
       .collection('timestamps')
       .doc(username)
       .collection('timestamps')

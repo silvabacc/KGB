@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import Joi from 'Joi';
+import Joi from 'joi';
 import { Status } from '../types';
 
 export const timestampBodySchema = Joi.object({

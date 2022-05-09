@@ -4,7 +4,7 @@ Discord bot that is definitely not monitoring and logging your hours
 ## Structure of KGB
 ![image](https://user-images.githubusercontent.com/47926269/167037675-64422691-427d-4c14-a1fe-06ba20603cb3.png)
 
-This repoistory contains two node.js applications, which are the `KGB Application` and `Backend API`. You can find the `KGB Application` at the root of this repository and the `Backend Api` inside `api` folder.
+This repoistory contains three applications, which are the `KGB Application`, `Backend API` and `Visualisation Web Application`. You can find the `KGB Application` at the root of this repository, the `Backend Api` inside `api` folder and the `Visualisation Web Application` in the `ui` folder.
 
 
 # Prerequisites

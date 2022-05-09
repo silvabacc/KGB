@@ -29,7 +29,7 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 2. Install dependecies via `npm install`
 3. Run the application either by `npm run dev` or `yarn dev`
    * Ensure that you're in the `ui` directory before starting
-4. Your app should be opened at `localhost:4000`
+4. Your app should be opened at `localhost:3000`
 
 # Linting
 * Using ESLint and Prettier for formatting

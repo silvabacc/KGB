@@ -1,8 +1,9 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import { ServiceAccount } from 'firebase-admin/app';
-import { TimestampData } from './dto';
+import { TimeSeries, TimestampData } from './dto';
 import { getConfig } from '../getConfig';
+import { Status } from '../types';
 
 const { GCP_PROJECT_ID, GCP_PRIVATE_KEY, GCP_CLIENT_EMAIL } = getConfig();
 
@@ -44,8 +45,54 @@ export class DatabaseService {
       .endBefore(epochEndValue)
       .get();
 
-    const test = documentData.docs.map((doc) => doc.data());
-    return test;
+    const users = new Set<string>();
+    documentData.docs.map((doc) => {
+      users.add(doc.data().username);
+    });
+
+    let response: TimeSeries[] = [];
+
+    users.forEach((name) => {
+      const usersData = documentData.docs.filter(
+        (doc) => doc.data().username === name
+      );
+
+      let foundConnected = false;
+      const timestamps = usersData.reduce((previous, next) => {
+        const { status, timestamp } = next.data();
+
+        if (status === Status.CONNECTED && foundConnected === false) {
+          foundConnected = true;
+          previous = [...previous, timestamp];
+        } else if (status === Status.DISCONNECTED) {
+          foundConnected = false;
+          previous = [...previous, timestamp];
+        }
+
+        return previous;
+      }, [] as number[]);
+
+      for (let i = 0; i < timestamps.length; i += 2) {
+        if (i === timestamps.length) {
+          return;
+        }
+
+        const currentDateObj = new Date(timestamps[i]);
+
+        const currentLabel = Date.UTC(
+          currentDateObj.getUTCFullYear(),
+          currentDateObj.getMonth(),
+          currentDateObj.getDate()
+        );
+
+        const hours = (timestamps[i + 1] - timestamps[i]) / 3.6e6;
+
+        response = [...response, { name, date: currentLabel, hours: hours }];
+      }
+      console.log(timestamps);
+    });
+
+    return response;
   }
 
   public static getDatabaseService() {

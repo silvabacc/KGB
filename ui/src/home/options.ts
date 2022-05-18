@@ -17,15 +17,18 @@ export const monthsOptions = [
 
 export const getChartOptions = (
   monthSelected: number,
+  year: number,
   data: Serie[],
   title?: string,
   subTitle?: string,
   xAxisTitle?: string,
-  yAxisTitle?: string
+  yAxisTitle?: string,
 ) => {
-
-
   return {
+    chart: {
+      type: 'column',
+    },
+
     title: {
       text: title
     },
@@ -46,17 +49,21 @@ export const getChartOptions = (
       labels: {
         step: 1,
         style: {
-					width: '2px',
+          width: '2px',
           fontSize: '12px',
           fontFamily: 'Arial,sans-serif'
         }
       }
     },
 
+    tooltip: {
+      pointFormat: 'Value: {point.y:.2f} hours'
+    },
+
     plotOptions: {
       series: {
         pointInterval: 24 * 3600 * 1000,
-        pointStart: Date.UTC(2022, monthSelected, 1)
+        pointStart: Date.UTC(year, monthSelected, 1)
       }
     },
 
@@ -77,6 +84,10 @@ export const getChartOptions = (
           }
         }
       ]
-    }
+    },
+
+    credits: {
+      enabled: false
+    },
   };
 };

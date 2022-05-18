@@ -37,7 +37,7 @@ class Controller {
         epochStartValue,
         epochEndValue
       );
-      return { data: data };
+      return { data };
     }
   }
 }

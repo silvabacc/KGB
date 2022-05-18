@@ -1,7 +1,7 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import { ServiceAccount } from 'firebase-admin/app';
-import { TimeSeries, TimestampData } from './dto';
+import { TimeSeries, TimeSeriesResponse, TimestampData } from './dto';
 import { getConfig } from '../getConfig';
 import { Status } from '../types';
 
@@ -50,7 +50,8 @@ export class DatabaseService {
       users.add(doc.data().username);
     });
 
-    let response: TimeSeries[] = [];
+    let series: TimeSeries[] = [];
+    let response: TimeSeriesResponse[] = [];
 
     users.forEach((name) => {
       const usersData = documentData.docs.filter(
@@ -87,12 +88,28 @@ export class DatabaseService {
 
         const hours = (timestamps[i + 1] - timestamps[i]) / 3.6e6;
 
-        response = [...response, { name, date: currentLabel, hours: hours }];
+        series = [...series, { name, data: [currentLabel, hours] }];
       }
-      console.log(timestamps);
     });
 
-    return response;
+    users.forEach((name) => {
+      const userBlock = { name, data: [] as number[][] };
+
+      const usersData = series.filter(
+        (timeseries) => timeseries.name === name
+      );
+
+      console.log(name, usersData);
+
+      usersData.map((serie) => {
+        userBlock.data = [...userBlock.data, serie.data]
+      })
+
+
+      response = [...response, userBlock]
+    });
+
+    return response.filter((series) => series.name !== undefined);
   }
 
   public static getDatabaseService() {

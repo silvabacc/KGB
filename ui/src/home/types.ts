@@ -13,7 +13,12 @@ export enum Month {
   Dev = 'Dev',
 }
 
+export interface TimestampsResponse {
+  data: Serie[]
+}
+
 export interface Serie {
   name: string;
-  data: number[];
+  date: number;
+  hours: number
 }

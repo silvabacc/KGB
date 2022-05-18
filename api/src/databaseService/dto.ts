@@ -6,6 +6,10 @@ export interface TimestampData {
 
 export interface TimeSeries {
   name: string;
-  date: number;
-  hours: number;
+  data: number[];
+}
+
+export interface TimeSeriesResponse {
+  name: string;
+  data: number[][]
 }

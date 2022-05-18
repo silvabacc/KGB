@@ -5,55 +5,39 @@ import { getChartOptions, monthsOptions } from './options';
 import { Month } from './types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-
-//Temporary number generator
-const generateRandomNumbers = () => {
-  let numbers: number[] = [];
-  for (let i = 0; i < 28; i++) {
-    numbers = [...numbers, Math.random() * 100];
-  }
-  return numbers;
-};
+import useFetch from '../hooks/useFetch';
+import { KGB_API_URL } from '../constants';
 
 const Home: React.FC = () => {
-  const [selectedMonth, setSelectedMonth] = useState<Month>(Month.Jan);
+  const today = new Date();
+
+  const [selectedMonth, setSelectedMonth] = useState<Month>(
+    Object.values(Month)[today.getMonth()]
+  );
+  const { response } = useFetch(
+    `${KGB_API_URL}/timestamp/monthly/${selectedMonth}`
+  );
+
+  const data = response?.data.data;
+
+  if (!data) {
+    <div>Loading...</div>;
+  }
 
   return (
     <>
       <Select
         onChange={(value) => setSelectedMonth(value?.value as Month)}
         className="Select"
-        defaultValue={monthsOptions[0]}
+        defaultValue={monthsOptions[today.getMonth()]}
         options={monthsOptions}
       />
       <HighchartsReact
         highcharts={Highcharts}
         options={getChartOptions(
           Object.keys(Month).indexOf(selectedMonth),
-          //Dummy data
-          //Fetch data from backend and transform into number[]
-          [
-            {
-              name: 'khf',
-              data: generateRandomNumbers()
-            },
-            {
-              name: 'I am Mama',
-              data: generateRandomNumbers()
-            },
-            {
-              name: 'Snakerino',
-              data: generateRandomNumbers()
-            },
-            {
-              name: 'Qasiminator',
-              data: generateRandomNumbers()
-            },
-            {
-              name: 'Light',
-              data: generateRandomNumbers()
-            }
-          ],
+          today.getFullYear(),
+          data,
           `${selectedMonth} hours`,
           '',
           'Day',

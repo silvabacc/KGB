@@ -99,8 +99,6 @@ export class DatabaseService {
         (timeseries) => timeseries.name === name
       );
 
-      console.log(name, usersData);
-
       usersData.map((serie) => {
         userBlock.data = [...userBlock.data, serie.data]
       })

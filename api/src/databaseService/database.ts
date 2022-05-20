@@ -86,7 +86,7 @@ export class DatabaseService {
           currentDateObj.getDate()
         );
 
-        const hours = (timestamps[i + 1] - timestamps[i]) / 3.6e6;
+        const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
 
         series = [...series, { name, data: [currentLabel, hours] }];
       }

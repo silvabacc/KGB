@@ -3,7 +3,8 @@ Discord bot that is definitely not monitoring and logging your hours
 
 My own version of the app working on my discord server [here](https://kgb-web.herokuapp.com/)
 My own version of the API working [here](https://kgb-web.herokuapp.com/) (Swagger Docs coming soon).
-Since my personal applicatiosn are on Heroku... They might take a while to load due to Heroku's free plan restrictions (apps goes to sleep after 30 mins of inactivity)
+
+Since my personal application are on Heroku... They might take a while to load due to Heroku's free plan restrictions (apps goes to sleep after 30 mins of inactivity)
 
 ## Structure of KGB
 ![image](https://user-images.githubusercontent.com/47926269/167037675-64422691-427d-4c14-a1fe-06ba20603cb3.png)

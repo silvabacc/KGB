@@ -1,4 +1,4 @@
-# Kerry Gobby Bergerson (WIP)
+# Kerry Gobby Bergerson
 Discord bot that is definitely not monitoring and logging your hours
 
 ## Structure of KGB

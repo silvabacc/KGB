@@ -1,15 +1,19 @@
 import axios, { AxiosResponse } from 'axios';
-import { useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useFetch = (url: string) => {
   const [response, setResponse] = useState<AxiosResponse<any, any>>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useMemo(async () => {
+  const fetch = useCallback(async () => {
+    setIsLoading(true)
     const response = await axios.get(url);
     setResponse(response);
-  }, [url]);
+    setIsLoading(false)
 
-  return { response };
+  }, []);
+
+  return { response, isLoading, fetch};
 };
 
 export default useFetch;

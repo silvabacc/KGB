@@ -7,6 +7,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import useFetch from '../hooks/useFetch';
 import { KGB_API_URL } from '../constants';
+import { useEffect } from 'react';
 
 const Home: React.FC = () => {
   const today = new Date();
@@ -14,25 +15,27 @@ const Home: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Month>(
     Object.values(Month)[today.getMonth()]
   );
-  const { response } = useFetch(
+
+  const { response, isLoading, fetch } = useFetch(
     `${KGB_API_URL}/timestamp/monthly/${selectedMonth}`
   );
 
-  const data = response?.data.data;
+  useEffect(() => {
+    fetch()
+  }, [selectedMonth])
 
-  if (!data) {
-    <div>Loading...</div>;
-  }
+  const data = response?.data.data;
 
   return (
     <>
       <Select
         onChange={(value) => setSelectedMonth(value?.value as Month)}
         className="Select"
+        value={monthsOptions.filter((monthOption) => monthOption.value === selectedMonth)}
         defaultValue={monthsOptions[today.getMonth()]}
         options={monthsOptions}
       />
-      <HighchartsReact
+      {!isLoading ? <HighchartsReact
         highcharts={Highcharts}
         options={getChartOptions(
           Object.keys(Month).indexOf(selectedMonth),
@@ -43,7 +46,7 @@ const Home: React.FC = () => {
           'Day',
           'Number of Hours'
         )}
-      />
+      /> : <div className='Loading'>Loading...</div>}
     </>
   );
 };

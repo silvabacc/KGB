@@ -1,3 +1,7 @@
 .Select {
-	width: 150px;
+  width: 150px;
+}
+
+.Loading {
+  text-align: center;
 }

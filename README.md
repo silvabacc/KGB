@@ -32,7 +32,7 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 # Set Up UI
 1. Go into `UI` folder
 2. Install dependecies via `npm install`
-3. You should update the variable `KGB_API_URL` in `ui/src/constants.ts` to either local API endpoint (http://localhost:4000 as default) or the currently deployed endpoint https://kgb-api.herokuapp.com/
+3. You should update the variable `KGB_API_URL` in `ui/src/constants.ts` to either local API endpoint (http://localhost:4000 as default) or the currently deployed endpoint https://kgb-api.nasdiscordbots.repl.co/
 4. Run the application either by `npm run dev` or `yarn dev`
    * Ensure that you're in the `ui` directory before starting
 5. Your app should be opened at `localhost:3000`

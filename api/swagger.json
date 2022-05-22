@@ -1,0 +1,88 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "kgb-api.nasdiscordbots.repl.co",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/timestamp": {
+      "post": {
+        "description": "Adds a timestamp",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "CONNECTED",
+                    "DISCONNECTED"
+                  ]
+                }
+              },
+              "required": [
+                "username",
+                "timestamp",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/timestamp/{frequency}/{value}": {
+      "get": {
+        "description": "Returns monthly or weekly data",
+        "parameters": [
+          {
+            "name": "frequency",
+            "in": "path",
+            "required": true,
+            "type": "monthly or frequency"
+          },
+          {
+            "name": "value",
+            "in": "path",
+            "required": true,
+            "type": "First 3 letters of a month, with capital e.g. Jan"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.MonthlyStatesWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Header {
+  font-weight: bold;
+  box-sizing: border-box;
+  margin-bottom: 2px;
+}
+
+.List {
+  list-style-position: inside;
+  padding: 0px;
+  margin: 0px;
+}
+
+.Individuals {
+  margin-top: 4px;
+}
+
+.Hours {
+  font-weight: 400;
+}

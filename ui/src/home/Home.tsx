@@ -8,6 +8,7 @@ import HighchartsReact from 'highcharts-react-official';
 import useFetch from '../hooks/useFetch';
 import { KGB_API_URL } from '../constants';
 import { useEffect } from 'react';
+import MonthlyStats from './components/monthlyStats';
 
 const Home: React.FC = () => {
   const today = new Date();
@@ -21,8 +22,8 @@ const Home: React.FC = () => {
   );
 
   useEffect(() => {
-    fetch()
-  }, [selectedMonth])
+    fetch();
+  }, [selectedMonth]);
 
   const data = response?.data.data;
 
@@ -31,22 +32,31 @@ const Home: React.FC = () => {
       <Select
         onChange={(value) => setSelectedMonth(value?.value as Month)}
         className="Select"
-        value={monthsOptions.filter((monthOption) => monthOption.value === selectedMonth)}
+        value={monthsOptions.filter(
+          (monthOption) => monthOption.value === selectedMonth
+        )}
         defaultValue={monthsOptions[today.getMonth()]}
         options={monthsOptions}
       />
-      {!isLoading ? <HighchartsReact
-        highcharts={Highcharts}
-        options={getChartOptions(
-          Object.keys(Month).indexOf(selectedMonth),
-          today.getFullYear(),
-          data,
-          `${selectedMonth} hours`,
-          '',
-          'Day',
-          'Number of Hours'
-        )}
-      /> : <div className='Loading'>Loading...</div>}
+      {!isLoading ? (
+        <>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getChartOptions(
+              Object.keys(Month).indexOf(selectedMonth),
+              today.getFullYear(),
+              data,
+              `${selectedMonth} hours`,
+              '',
+              'Day',
+              'Number of Hours'
+            )}
+          />
+          <MonthlyStats data={data} monthSelected={selectedMonth} />
+        </>
+      ) : (
+        <div className="Loading">Loading...</div>
+      )}
     </>
   );
 };

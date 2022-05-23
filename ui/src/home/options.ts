@@ -22,15 +22,18 @@ export const getChartOptions = (
   title?: string,
   subTitle?: string,
   xAxisTitle?: string,
-  yAxisTitle?: string,
+  yAxisTitle?: string
 ) => {
   return {
     chart: {
-      type: 'column',
+      type: 'column'
     },
 
     title: {
-      text: title
+      text: title,
+      style: {
+        fontWeight: 'bold'
+      }
     },
 
     subtitle: {
@@ -39,8 +42,11 @@ export const getChartOptions = (
 
     yAxis: {
       title: {
-        text: yAxisTitle
-      }
+        text: yAxisTitle,
+        style: {
+          fontWeight: 'bold'
+        }
+      },
     },
 
     xAxis: {
@@ -88,6 +94,6 @@ export const getChartOptions = (
 
     credits: {
       enabled: false
-    },
+    }
   };
 };

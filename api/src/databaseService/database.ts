@@ -93,18 +93,17 @@ export class DatabaseService {
     });
 
     users.forEach((name) => {
-      const userBlock = { name, data: [] as number[][] };
+      const userBlock = { name, data: [] as number[][], monthly: 0 };
 
-      const usersData = series.filter(
-        (timeseries) => timeseries.name === name
-      );
+      const usersData = series.filter((timeseries) => timeseries.name === name);
 
       usersData.map((serie) => {
-        userBlock.data = [...userBlock.data, serie.data]
-      })
+        userBlock.data = [...userBlock.data, serie.data];
+        userBlock.monthly += serie.data[1];
+      });
 
 
-      response = [...response, userBlock]
+      response = [...response, userBlock];
     });
 
     return response.filter((series) => series.name !== undefined);

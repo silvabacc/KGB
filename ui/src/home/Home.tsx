@@ -5,10 +5,13 @@ import { getChartOptions, monthsOptions } from './options';
 import { Month } from './types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 import useFetch from '../hooks/useFetch';
 import { KGB_API_URL } from '../constants';
 import { useEffect } from 'react';
 import MonthlyStats from './components/monthlyStats';
+
+NoDataToDisplay(Highcharts);
 
 const Home: React.FC = () => {
   const today = new Date();
@@ -17,13 +20,15 @@ const Home: React.FC = () => {
     Object.values(Month)[today.getMonth()]
   );
 
+  console.log(selectedMonth);
+
   const { response, isLoading, fetch } = useFetch(
     `${KGB_API_URL}/timestamp/monthly/${selectedMonth}`
   );
 
   useEffect(() => {
     fetch();
-  }, [selectedMonth]);
+  }, [fetch, selectedMonth]);
 
   const data = response?.data.data;
 

@@ -13,24 +13,27 @@ const MonthlyStats: React.FC<MonthlyStatsProps> = ({ monthSelected, data }) => {
     a.monthly < b.monthly ? 1 : -1
   );
 
-  console.log(orderedUsersData);
   return (
     <>
       <div className="MonthlyStatesWrapper">
         <div className="Header">Total stats for {monthSelected} </div>
         <ol className="List">
-          {orderedUsersData
-            .filter((data) => data.monthly > 0.01)
-            .map((user) => {
-              return (
-                <li className="Individuals">
-                  {user.name} -{' '}
-                  <span className="Hours">
-                    {user.monthly.toFixed(1)} hours{' '}
-                  </span>
-                </li>
-              );
-            })}
+          {data.length ? (
+            orderedUsersData
+              .filter((data) => data.monthly > 0.01)
+              .map((user) => {
+                return (
+                  <li className="Individuals">
+                    {user.name} -{' '}
+                    <span className="Hours">
+                      {user.monthly.toFixed(1)} hours{' '}
+                    </span>
+                  </li>
+                );
+              })
+          ) : (
+            <div className='Individuals'>There are no stats for this month</div>
+          )}
         </ol>
       </div>
     </>

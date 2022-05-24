@@ -11,7 +11,7 @@ const useFetch = (url: string) => {
     setResponse(response);
     setIsLoading(false)
 
-  }, []);
+  }, [url]);
 
   return { response, isLoading, fetch};
 };

@@ -46,9 +46,11 @@ export const getChartOptions = (
         style: {
           fontWeight: 'bold'
         }
-      },
+      }
     },
-
+    lang: {
+      noData: 'There is no data for this month'
+    },
     xAxis: {
       type: 'datetime',
       tickInterval: 24 * 3600 * 1000, // 1 day

@@ -10,6 +10,7 @@ import useFetch from '../hooks/useFetch';
 import { KGB_API_URL } from '../constants';
 import { useEffect } from 'react';
 import MonthlyStats from './components/monthlyStats';
+import Loading from '../commonComponents/loading';
 
 NoDataToDisplay(Highcharts);
 
@@ -20,17 +21,19 @@ const Home: React.FC = () => {
     Object.values(Month)[today.getMonth()]
   );
 
-  console.log(selectedMonth);
-
-  const { response, isLoading, fetch } = useFetch(
-    `${KGB_API_URL}/timestamp/monthly/${selectedMonth}`
-  );
+  const {
+    response: data,
+    isLoading,
+    fetch
+  } = useFetch(`${KGB_API_URL}/timestamp/monthly/${selectedMonth}`);
 
   useEffect(() => {
     fetch();
   }, [fetch, selectedMonth]);
 
-  const data = response?.data.data;
+  if (!data) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -60,7 +63,9 @@ const Home: React.FC = () => {
           <MonthlyStats data={data} monthSelected={selectedMonth} />
         </>
       ) : (
-        <div className="Loading">Loading...</div>
+        <div className="Loading">
+          <Loading />
+        </div>
       )}
     </>
   );

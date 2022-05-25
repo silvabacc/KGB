@@ -1,12 +1,12 @@
 import { RequestHandler, Request, Response } from 'express';
-import Controller from '../controllers/controller';
+import TimestampController from '../controllers/timestampController';
 import { Frequency, Month } from '../types';
 
 export const timestampsHandler: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const controller = new Controller();
+  const controller = new TimestampController();
 
   const body = req.body;
   const response = await controller.postTimestampRoute(body);
@@ -17,7 +17,7 @@ export const frequencyHandler: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const controller = new Controller();
+  const controller = new TimestampController();
 
   const { params } = req;
 

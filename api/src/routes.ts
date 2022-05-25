@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { frequencyHandler, timestampsHandler } from './handler/handler';
+import { frequencyHandler, timestampsHandler } from './handler/timestampHandler';
 import { validateFrequencyRoute, validateTimestampRoute } from './validations/routeValidations';
 
 const router = Router();

@@ -1,7 +1,7 @@
 import './monthlyStats.css';
 import React from 'react';
 import { Month } from '../types';
-import { TimeSeriesResponse } from '../../types';
+import { TimeSeriesResponse } from '../../responseTypes';
 
 interface MonthlyStatsProps {
   monthSelected: Month;

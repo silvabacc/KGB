@@ -1,9 +1,8 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
 import { ServiceAccount } from 'firebase-admin/app';
-import { TimeSeries, TimeSeriesResponse, TimestampData } from './dto';
+import { TimestampData } from './dto';
 import { getConfig } from '../getConfig';
-import { Status } from '../types';
 
 const { GCP_PROJECT_ID, GCP_PRIVATE_KEY, GCP_CLIENT_EMAIL } = getConfig();
 
@@ -38,75 +37,14 @@ export class DatabaseService {
   }
 
   async getTimestampData(epochStartValue: number, epochEndValue: number) {
-    const documentData = await this.db
+    const data = this.db
       .collectionGroup('timestamps')
       .orderBy('timestamp')
       .startAfter(epochStartValue)
       .endBefore(epochEndValue)
       .get();
 
-    const users = new Set<string>();
-    documentData.docs.map((doc) => {
-      users.add(doc.data().username);
-    });
-
-    let series: TimeSeries[] = [];
-    let response: TimeSeriesResponse[] = [];
-
-    users.forEach((name) => {
-      const usersData = documentData.docs.filter(
-        (doc) => doc.data().username === name
-      );
-
-      let foundConnected = false;
-      const timestamps = usersData.reduce((previous, next) => {
-        const { status, timestamp } = next.data();
-
-        if (status === Status.CONNECTED && foundConnected === false) {
-          foundConnected = true;
-          previous = [...previous, timestamp];
-        } else if (status === Status.DISCONNECTED) {
-          foundConnected = false;
-          previous = [...previous, timestamp];
-        }
-
-        return previous;
-      }, [] as number[]);
-
-      for (let i = 0; i < timestamps.length; i += 2) {
-        if (i === timestamps.length) {
-          return;
-        }
-
-        const currentDateObj = new Date(timestamps[i]);
-
-        const currentLabel = Date.UTC(
-          currentDateObj.getUTCFullYear(),
-          currentDateObj.getMonth(),
-          currentDateObj.getDate()
-        );
-
-        const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
-
-        series = [...series, { name, data: [currentLabel, hours] }];
-      }
-    });
-
-    users.forEach((name) => {
-      const userBlock = { name, data: [] as number[][], monthly: 0 };
-
-      const usersData = series.filter((timeseries) => timeseries.name === name);
-
-      usersData.map((serie) => {
-        userBlock.data = [...userBlock.data, serie.data];
-        userBlock.monthly += serie.data[1];
-      });
-
-
-      response = [...response, userBlock];
-    });
-
-    return response.filter((series) => series.name !== undefined);
+    return data;
   }
 
   public static getDatabaseService() {

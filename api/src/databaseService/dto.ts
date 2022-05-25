@@ -4,7 +4,7 @@ export interface TimestampData {
   status: string;
 }
 
-export interface TimeSeries {
+export interface TimeSerie {
   name: string;
   data: number[];
 }

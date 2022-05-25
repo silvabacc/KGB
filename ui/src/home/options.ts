@@ -1,4 +1,4 @@
-import { Serie } from './types';
+import { TimeSeriesResponse } from "../responseTypes";
 
 export const monthsOptions = [
   { label: 'Jan', value: 'Jan' },
@@ -18,7 +18,7 @@ export const monthsOptions = [
 export const getChartOptions = (
   monthSelected: number,
   year: number,
-  data: Serie[],
+  data: TimeSeriesResponse[] | undefined,
   title?: string,
   subTitle?: string,
   xAxisTitle?: string,

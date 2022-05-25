@@ -10,15 +10,5 @@ export enum Month {
   Sept = 'Sept',
   Oct = 'Oct',
   Nov = 'Nov',
-  Dev = 'Dev',
-}
-
-export interface TimestampsResponse {
-  data: Serie[]
-}
-
-export interface Serie {
-  name: string;
-  date: number;
-  hours: number
+  Dev = 'Dev'
 }

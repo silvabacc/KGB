@@ -97,8 +97,10 @@ class TimestampController {
         );
 
         usersData.map((serie) => {
-          userBlock.data = [...userBlock.data, serie.data];
-          userBlock.monthly += serie.data[1];
+          if (!isNaN(serie.data[1])) {
+            userBlock.data = [...userBlock.data, serie.data];
+            userBlock.monthly += serie.data[1];
+          }
         });
 
         response = [...response, userBlock];

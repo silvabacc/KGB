@@ -6,8 +6,8 @@ import { getConfig } from '../getConfig';
 
 const { GCP_PROJECT_ID, GCP_PRIVATE_KEY, GCP_CLIENT_EMAIL } = getConfig();
 
-export class DatabaseService {
-  private static databaseService: DatabaseService;
+export class FirebaseDatabaseService {
+  private static databaseService: FirebaseDatabaseService;
   db: Firestore;
 
   private constructor() {
@@ -48,8 +48,8 @@ export class DatabaseService {
   }
 
   public static getDatabaseService() {
-    if (!DatabaseService.databaseService) {
-      DatabaseService.databaseService = new DatabaseService();
+    if (!FirebaseDatabaseService.databaseService) {
+      FirebaseDatabaseService.databaseService = new FirebaseDatabaseService();
     }
 
     return this.databaseService;

@@ -10,16 +10,13 @@ export class SupabaseService {
 
   private constructor() {
     this.client = createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log(SUPABASE_KEY, SUPABASE_URL);
   }
 
   async addNewTimestamp(addNewTimestampData: TimestampData) {
     const { username, timestamp, status } = addNewTimestampData;
-    const { data, error } = await this.client
+    await this.client
       .from('timestamps')
       .insert([{ timestamp, username, status }]);
-    console.log(data);
-    console.log(error);
   }
 
   async getTimestampData(epochStartValue: number, epochEndValue: number) {}

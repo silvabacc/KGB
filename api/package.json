@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Backend for the KGB application",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.ts --watch",
     "start": "ts-node src/app.ts",
     "swagger-autogen": "node scripts/swagger.js",

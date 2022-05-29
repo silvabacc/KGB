@@ -1,5 +1,7 @@
 import { FirebaseError } from 'firebase-admin/app';
-import { DatabaseService } from '../databaseService/database';
+import { FirebaseDatabaseService } from '../databaseService/firebaseDatabase';
+import { SupabaseService } from '../databaseService/supabaseDatabase';
+
 import {
   TimeSerie,
   TimeSeriesResponse,
@@ -9,105 +11,125 @@ import { Frequency, Month, Status, TimestampBody } from '../types';
 
 class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
-    const databaseService = DatabaseService.getDatabaseService();
+    const firebaseDatabaseService =
+      FirebaseDatabaseService.getDatabaseService();
+    const supabaseService = SupabaseService.getService();
+
     const { username, timestamp, status } = body;
 
     const timestampData: TimestampData = { username, timestamp, status };
 
     try {
-      await databaseService.addNewTimestamp(timestampData);
+      await firebaseDatabaseService.addNewTimestamp(timestampData);
+      await supabaseService.addNewTimestamp(timestampData);
       return { message: 'POSTED' };
     } catch (error: FirebaseError | any) {
       return { message: error.message };
     }
   }
 
-  async getFrequencyRoute(frequency: Frequency, freqValue: Month | number) {
-    const databaseService = DatabaseService.getDatabaseService();
+  async getFrequencyRoute(
+    frequency: Frequency,
+    freqValue: Month | number,
+    isV1: boolean
+  ) {
+    const supabaseService = SupabaseService.getService();
 
-    if (frequency === Frequency.MONTHLY) {
-      const epochStartValue = Date.UTC(
-        2022,
-        Object.values(Month).indexOf(freqValue as Month),
-        1
+    const epochStartValue = Date.UTC(
+      2022,
+      Object.values(Month).indexOf(freqValue as Month),
+      1
+    );
+    const epochEndValue = Date.UTC(
+      2022,
+      Object.values(Month).indexOf(freqValue as Month) + 1,
+      0
+    );
+
+    //If on V1 route, use the Firebase DB
+    if (frequency === Frequency.MONTHLY && !isV1) {
+      return this.monthlyDataFirebase(epochStartValue, epochEndValue);
+    } else if (frequency === Frequency.MONTHLY && isV1) {
+      return this.monthlyDataPostgress(epochStartValue, epochEndValue);
+    }
+  }
+
+  async monthlyDataFirebase(epochStartValue: number, epochEndValue: number) {
+    const firebaseDatabaseService =
+      FirebaseDatabaseService.getDatabaseService();
+
+    const documentData = await firebaseDatabaseService.getTimestampData(
+      epochStartValue,
+      epochEndValue
+    );
+
+    const users = new Set<string>();
+    documentData.docs.map((doc) => {
+      users.add(doc.data().username);
+    });
+
+    let series: TimeSerie[] = [];
+    let response: TimeSeriesResponse[] = [];
+
+    users.forEach((name) => {
+      const usersData = documentData.docs.filter(
+        (doc) => doc.data().username === name
       );
-      const epochEndValue = Date.UTC(
-        2022,
-        Object.values(Month).indexOf(freqValue as Month),
-        28
-      );
 
-      const documentData = await databaseService.getTimestampData(
-        epochStartValue,
-        epochEndValue
-      );
+      let foundConnected = false;
+      const timestamps = usersData.reduce((previous, next) => {
+        const { status, timestamp } = next.data();
 
-      const users = new Set<string>();
-      documentData.docs.map((doc) => {
-        users.add(doc.data().username);
-      });
+        if (status === Status.CONNECTED && foundConnected === false) {
+          foundConnected = true;
+          previous = [...previous, timestamp];
+        } else if (status === Status.DISCONNECTED) {
+          foundConnected = false;
+          previous = [...previous, timestamp];
+        }
 
-      let series: TimeSerie[] = [];
-      let response: TimeSeriesResponse[] = [];
+        return previous;
+      }, [] as number[]);
 
-      users.forEach((name) => {
-        const usersData = documentData.docs.filter(
-          (doc) => doc.data().username === name
+      for (let i = 0; i < timestamps.length; i += 2) {
+        if (i === timestamps.length) {
+          return;
+        }
+
+        const currentDateObj = new Date(timestamps[i]);
+
+        const currentLabel = Date.UTC(
+          currentDateObj.getUTCFullYear(),
+          currentDateObj.getMonth(),
+          currentDateObj.getDate()
         );
 
-        let foundConnected = false;
-        const timestamps = usersData.reduce((previous, next) => {
-          const { status, timestamp } = next.data();
+        const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
 
-          if (status === Status.CONNECTED && foundConnected === false) {
-            foundConnected = true;
-            previous = [...previous, timestamp];
-          } else if (status === Status.DISCONNECTED) {
-            foundConnected = false;
-            previous = [...previous, timestamp];
-          }
+        series = [...series, { name, data: [currentLabel, hours] }];
+      }
+    });
 
-          return previous;
-        }, [] as number[]);
+    users.forEach((name) => {
+      const userBlock = { name, data: [] as number[][], monthly: 0 };
 
-        for (let i = 0; i < timestamps.length; i += 2) {
-          if (i === timestamps.length) {
-            return;
-          }
+      const usersData = series.filter((timeseries) => timeseries.name === name);
 
-          const currentDateObj = new Date(timestamps[i]);
-
-          const currentLabel = Date.UTC(
-            currentDateObj.getUTCFullYear(),
-            currentDateObj.getMonth(),
-            currentDateObj.getDate()
-          );
-
-          const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
-
-          series = [...series, { name, data: [currentLabel, hours] }];
+      usersData.map((serie) => {
+        if (!isNaN(serie.data[1])) {
+          userBlock.data = [...userBlock.data, serie.data];
+          userBlock.monthly += serie.data[1];
         }
       });
 
-      users.forEach((name) => {
-        const userBlock = { name, data: [] as number[][], monthly: 0 };
+      response = [...response, userBlock];
+    });
 
-        const usersData = series.filter(
-          (timeseries) => timeseries.name === name
-        );
+    return response.filter((series) => series.name !== undefined);
+  }
 
-        usersData.map((serie) => {
-          if (!isNaN(serie.data[1])) {
-            userBlock.data = [...userBlock.data, serie.data];
-            userBlock.monthly += serie.data[1];
-          }
-        });
-
-        response = [...response, userBlock];
-      });
-
-      return response.filter((series) => series.name !== undefined);
-    }
+  async monthlyDataPostgress(epochStartValue: number, epochEndValue: number) {
+    return 'TODO';
   }
 }
 

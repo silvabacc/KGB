@@ -28,7 +28,8 @@ This repoistory contains three applications, which are the `KGB Application`, `B
    * To get GCP environment credentials, you need to get them from Firebase. You can view all service accounts associated with your project in the Service accounts tab of your settings > Project Settings in the Firebase console. You generate a new key which you can download a JSON file. Use this JSON file to fill in the GCP variables
    * To get Supabase credentials, set up a project [here](https://app.supabase.io/)
    * Go to APIs, then Authentication tab 
-   * There you will see the SUPABASE_URL and SUPABASE_KEY. Use those values and save them in .env
+   * There you will see the `SUPABASE_URL` and `SUPABASE_KEY`. Use those values and save them in .env
+   * To set up tables, use the diagram [here]()
 4. Run the application either `npm run dev`
    * Ensure that you're in the `api` directory before starting
 

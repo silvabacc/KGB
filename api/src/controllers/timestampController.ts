@@ -42,8 +42,8 @@ class TimestampController {
     );
     const epochEndValue = Date.UTC(
       2022,
-      Object.values(Month).indexOf(freqValue as Month),
-      28
+      Object.values(Month).indexOf(freqValue as Month) + 1,
+      0
     );
 
     //If on V1 route, use the Firebase DB

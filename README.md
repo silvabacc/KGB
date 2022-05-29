@@ -5,7 +5,7 @@ My own version of the app working on my discord server [here](https://kgb-web.na
 My own version of the API working with [Swagger UI](https://kgb-api.nasdiscordbots.repl.co/api-docs/).
 
 ## Structure of KGB
-![image](https://user-images.githubusercontent.com/47926269/167037675-64422691-427d-4c14-a1fe-06ba20603cb3.png)
+![image](https://github.com/k-h-f/KGB/blob/master/docs/images/architecture.png)
 
 This repoistory contains three applications, which are the `KGB Application`, `Backend API` and `Visualisation Web Application`. You can find the `KGB Application` at the root of this repository, the `Backend Api` inside `api` folder and the `Visualisation Web Application` in the `ui` folder.
 
@@ -23,7 +23,7 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 # Set up Supabase
 1. Go to [Supabase](https://app.supabase.io/) and set up your own personal project
 2. Once setup, go onto the Database page and create a new table
-   * Follow this schema [here]()
+   * Follow this schema [here](https://github.com/k-h-f/KGB/blob/master/docs/images/schema.png)
 
 # Set Up API
 1. Go into `api` folder

@@ -1,6 +1,6 @@
 import { FirebaseError } from 'firebase-admin/app';
 import { FirebaseDatabaseService } from '../databaseService/firebaseDatabase';
-import { PostgresDatabaseService } from '../databaseService/posgresDatabase';
+import { SupabaseService } from '../databaseService/supabaseDatabase';
 
 import {
   TimeSerie,
@@ -10,20 +10,18 @@ import {
 import { Frequency, Month, Status, TimestampBody } from '../types';
 
 class TimestampController {
-  async postTimestampRoute(body: TimestampBody, isV1: boolean) {
+  async postTimestampRoute(body: TimestampBody) {
     const firebaseDatabaseService =
       FirebaseDatabaseService.getDatabaseService();
-    const postgresDatabaseService =
-      PostgresDatabaseService.getDatabaseService();
+    const supabaseService = SupabaseService.getService();
 
     const { username, timestamp, status } = body;
 
     const timestampData: TimestampData = { username, timestamp, status };
 
     try {
-      isV1
-        ? await firebaseDatabaseService.addNewTimestamp(timestampData)
-        : await postgresDatabaseService.addNewTimestamp(timestampData);
+      await firebaseDatabaseService.addNewTimestamp(timestampData);
+      await supabaseService.addNewTimestamp(timestampData);
       return { message: 'POSTED' };
     } catch (error: FirebaseError | any) {
       return { message: error.message };
@@ -35,8 +33,7 @@ class TimestampController {
     freqValue: Month | number,
     isV1: boolean
   ) {
-    const postgresDatabaseService =
-      PostgresDatabaseService.getDatabaseService();
+    const supabaseService = SupabaseService.getService();
 
     const epochStartValue = Date.UTC(
       2022,

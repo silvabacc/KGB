@@ -8,10 +8,9 @@ export const timestampsHandler: RequestHandler = async (
   res: Response
 ) => {
   const controller = new TimestampController();
-  const { baseUrl, body } = req;
-  const isV1 = baseUrl === v1;
+  const { body } = req;
 
-  const response = await controller.postTimestampRoute(body, isV1);
+  const response = await controller.postTimestampRoute(body);
   res.send(response);
 };
 

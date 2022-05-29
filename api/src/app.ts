@@ -2,13 +2,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import routes from './routes/default';
+import defaultRoutes from './routes/default';
 import { getConfig } from './getConfig';
 import cors from 'cors';
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger';
 import { v1 } from './routes/routes';
+import v1Routes from './routes/v1';
 
 const { PORT } = getConfig();
 
@@ -19,8 +20,8 @@ app.set('port', PORT);
 app.use(express.json());
 app.use(cors());
 
-app.use('/', routes);
-app.use(v1, routes);
+app.use('/', defaultRoutes);
+app.use(v1, v1Routes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { frequencyHandler, timestampsHandler } from '../handler/timestampHandler';
 import { validateFrequencyRoute, validateTimestampRoute } from '../validations/routeValidations';
 
-const router = Router();
+const defaultRoutes = Router();
 
-router.post('/timestamp', validateTimestampRoute, timestampsHandler);
-router.get('/timestamp/:frequency/:value', validateFrequencyRoute, frequencyHandler);
+defaultRoutes.post('/timestamp', validateTimestampRoute, timestampsHandler);
+defaultRoutes.get('/timestamp/:frequency/:value', validateFrequencyRoute, frequencyHandler);
 
-export default router;
+export default defaultRoutes;

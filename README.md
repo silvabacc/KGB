@@ -12,7 +12,7 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 
 # Prerequisites
 * Node v16.15.0
-* Set up your own personal Firebase Firestore project
+* Set up your own Supabase project
 
 # Set Up Bot
 1. Install dependecies via `npm install`
@@ -20,16 +20,21 @@ This repoistory contains three applications, which are the `KGB Application`, `B
     * Add your Discord token in the .env. Guide on how to create a Discord token found [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
 3. Run the application by `npm run dev`
 
+# Set up Supabase
+1. Go to [Supabase](https://app.supabase.io/) and set up your own personal project
+2. Once setup, go onto the Database page and create a new table
+   * Follow this schema [here]()
+
 # Set Up API
 1. Go into `api` folder
 2. Install dependecies via `npm install`
 3. Create an .env file and copy the values from env.defaults
    * Default port is `4000`
-   * To get GCP environment credentials, you need to get them from Firebase. You can view all service accounts associated with your project in the Service accounts tab of your settings > Project Settings in the Firebase console. You generate a new key which you can download a JSON file. Use this JSON file to fill in the GCP variables
-   * To get Supabase credentials, set up a project [here](https://app.supabase.io/)
-   * Go to APIs, then Authentication tab 
-   * There you will see the `SUPABASE_URL` and `SUPABASE_KEY`. Use those values and save them in .env
-   * To set up tables, use the diagram [here]()
+   * You can ignore the GCP variables as this project is moving away from Firebase
+   * To get Supabase credentials (assuming you've followed the Set up Supabase step): 
+      * go to the Supabase project dashboard [here](https://app.supabase.io/).
+      * Go to APIs, then Authentication tab 
+      * There you will see the `SUPABASE_URL` and `SUPABASE_KEY`. Use those values and save them in .env
 4. Run the application either `npm run dev`
    * Ensure that you're in the `api` directory before starting
 

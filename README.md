@@ -1,7 +1,8 @@
 # Kerry Gobby Bergerson
 Discord bot that is definitely not monitoring and logging your hours
 
-My own version of the app working on my discord server [here](https://kgb-web.nasdiscordbots.repl.co)
+My own version of the app working on my discord server [here](https://kgb-web.nasdiscordbots.repl.co) (Could take a while to load up, it's deployed on free tier servers)
+
 My own version of the API working with [Swagger UI](https://kgb-api.nasdiscordbots.repl.co/api-docs/).
 
 ## Structure of KGB

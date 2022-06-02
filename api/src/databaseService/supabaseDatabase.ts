@@ -19,7 +19,14 @@ export class SupabaseService {
       .insert([{ timestamp, username, status }]);
   }
 
-  async getTimestampData(epochStartValue: number, epochEndValue: number) {}
+  async getTimestampData(epochStartValue: number, epochEndValue: number) {
+    return await this.client
+      .from<TimestampData>('transfer_timestamps')
+      .select('*')
+      .gte('timestamp', epochStartValue)
+      .lte('timestamp', epochEndValue)
+      .order('timestamp', { ascending: true });
+  }
 
   public static getService() {
     if (!SupabaseService.supabaseService) {

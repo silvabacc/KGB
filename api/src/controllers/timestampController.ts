@@ -33,8 +33,6 @@ class TimestampController {
     freqValue: Month | number,
     isV1: boolean
   ) {
-    const supabaseService = SupabaseService.getService();
-
     const epochStartValue = Date.UTC(
       2022,
       Object.values(Month).indexOf(freqValue as Month),
@@ -129,7 +127,81 @@ class TimestampController {
   }
 
   async monthlyDataPostgress(epochStartValue: number, epochEndValue: number) {
-    return 'TODO';
+    const supabaseService = SupabaseService.getService();
+
+    const timestampResponse = await supabaseService.getTimestampData(
+      epochStartValue,
+      epochEndValue
+    );
+
+    if (timestampResponse.error) {
+      return timestampResponse.error;
+    }
+
+    const users = new Set<string>();
+    timestampResponse.data.map((data) => {
+      users.add(data.username);
+    });
+
+
+    let series: TimeSerie[] = [];
+    let response: TimeSeriesResponse[] = [];
+
+    users.forEach((name) => {
+      const usersData = timestampResponse.data.filter(
+        (data) => data.username === name
+      );
+
+      let foundConnected = false;
+      const timestamps = usersData.reduce((previous, next) => {
+        const { status, timestamp } = next;
+
+        if (status === Status.CONNECTED && foundConnected === false) {
+          foundConnected = true;
+          previous = [...previous, timestamp];
+        } else if (status === Status.DISCONNECTED) {
+          foundConnected = false;
+          previous = [...previous, timestamp];
+        }
+
+        return previous;
+      }, [] as number[]);
+
+      for (let i = 0; i < timestamps.length; i += 2) {
+        if (i === timestamps.length) {
+          return;
+        }
+
+        const currentDateObj = new Date(timestamps[i]);
+
+        const currentLabel = Date.UTC(
+          currentDateObj.getUTCFullYear(),
+          currentDateObj.getMonth(),
+          currentDateObj.getDate()
+        );
+
+        const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
+
+        series = [...series, { name, data: [currentLabel, hours] }];
+      }
+    });
+
+    users.forEach((name) => {
+      const userBlock = { name, data: [] as number[][], monthly: 0 };
+
+      const usersData = series.filter((timeseries) => timeseries.name === name);
+
+      usersData.map((serie) => {
+        if (!isNaN(serie.data[1])) {
+          userBlock.data = [...userBlock.data, serie.data];
+          userBlock.monthly += serie.data[1];
+        }
+      });
+
+      response = [...response, userBlock];
+    });
+
+    return response.filter((series) => series.name !== undefined);
   }
 }
 

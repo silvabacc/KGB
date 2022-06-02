@@ -25,7 +25,7 @@ const Home: React.FC = () => {
     response: data,
     isLoading,
     fetch
-  } = useFetch(`${KGB_API_URL}/timestamp/monthly/${selectedMonth}`);
+  } = useFetch(`${KGB_API_URL}/v1/timestamp/monthly/${selectedMonth}`);
 
   useEffect(() => {
     fetch();

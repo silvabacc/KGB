@@ -21,7 +21,7 @@ export class SupabaseService {
 
   async getTimestampData(epochStartValue: number, epochEndValue: number) {
     return await this.client
-      .from<TimestampData>('transfer_timestamps')
+      .from<TimestampData>('timestamps')
       .select('*')
       .gte('timestamp', epochStartValue)
       .lte('timestamp', epochEndValue)

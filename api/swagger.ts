@@ -103,58 +103,6 @@ const swagger = {
         }
       }
     },
-    '/v1/timestamp/{frequency}/{value}': {
-      get: {
-        description:
-          'Returns monthly or weekly data - This is the v1 endpoint that uses the Supabase/Postgres service',
-        parameters: [
-          {
-            name: 'frequency',
-            in: 'path',
-            required: true,
-            type: 'string'
-          },
-          {
-            name: 'value',
-            in: 'path',
-            required: true,
-            type: 'string'
-          }
-        ],
-        responses: {
-          '200': {
-            description: 'OK'
-          },
-          '400': {
-            description: 'Bad Request'
-          },
-          examples: {
-            'application/json': {
-              data: [
-                {
-                  username: 'JohnSmith123',
-                  data: [
-                    [1651968000000, 1.7473877777777778],
-                    [1653004800000, 4.176603055555556]
-                  ],
-                  monthly: 5.923990833333334,
-                  name: 'JohnSmith123'
-                },
-                {
-                  username: 'SmithJohn123',
-                  data: [
-                    [1653004800000, 2.9382841666666666],
-                    [1653177600000, 5.8708175]
-                  ],
-                  monthly: 30.176431388888886,
-                  name: 'SmithJohn123'
-                }
-              ]
-            }
-          }
-        }
-      }
-    }
   }
 };
 

@@ -31,6 +31,9 @@ const swagger = {
                 status: {
                   type: 'string',
                   enum: ['CONNECTED', 'DISCONNECTED']
+                },
+                userId: {
+                  type: 'string',
                 }
               },
               required: ['username', 'timestamp', 'status'],

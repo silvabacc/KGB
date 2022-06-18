@@ -11,9 +11,9 @@ class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
     const supabaseService = SupabaseService.getService();
 
-    const { username, timestamp, status } = body;
+    const { username, timestamp, status, userId } = body;
 
-    const timestampData: TimestampData = { username, timestamp, status };
+    const timestampData: TimestampData = { username, timestamp, userId, status };
 
     try {
       await supabaseService.addNewTimestamp(timestampData);

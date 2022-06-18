@@ -61,6 +61,7 @@ class EventHandler {
       async (oldState: VoiceState, newState: VoiceState) => {
         const requestBody: TimestampBody = {
           username: oldState.member?.displayName || '',
+          userId: oldState.member?.id || '',
           timestamp: new Date().getTime(),
           status:
             newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED

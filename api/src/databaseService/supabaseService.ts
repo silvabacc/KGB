@@ -13,10 +13,10 @@ export class SupabaseService {
   }
 
   async addNewTimestamp(addNewTimestampData: TimestampData) {
-    const { username, timestamp, status } = addNewTimestampData;
+    const { username, timestamp, status, userId } = addNewTimestampData;
     await this.client
       .from('timestamps')
-      .insert([{ timestamp, username, status }]);
+      .insert([{ timestamp, username, status, userId }]);
   }
 
   async getTimestampData(epochStartValue: number, epochEndValue: number) {

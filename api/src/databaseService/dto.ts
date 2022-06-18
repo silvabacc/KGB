@@ -1,5 +1,6 @@
 export interface TimestampData {
   username: string;
+  userId: string;
   timestamp: number;
   status: string;
 }

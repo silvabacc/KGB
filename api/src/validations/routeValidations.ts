@@ -5,6 +5,7 @@ import { Frequency, Month, Status } from '../types';
 export const timestampBodySchema = Joi.object({
   username: Joi.string().required(),
   timestamp: Joi.number().required(),
+  userId: Joi.string().required(),
   status: Joi.string()
     .valid(...Object.values(Status))
     .required()

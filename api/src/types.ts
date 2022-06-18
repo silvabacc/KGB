@@ -26,6 +26,7 @@ export enum Month {
 
 export interface TimestampBody {
   username: string;
+  userId: string;
   timestamp: number;
   status: Status;
 }

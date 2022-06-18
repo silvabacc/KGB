@@ -3,9 +3,10 @@ import { SupabaseService } from '../databaseService/supabaseService';
 import {
   TimeSerie,
   TimeSeriesResponse,
-  TimestampData
+  TimestampData,
+  UserData
 } from '../databaseService/dto';
-import { Frequency, Month, Status, TimestampBody } from '../types';
+import { Frequency, Month, Status, TimestampBody, UserBody } from '../types';
 
 class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
@@ -13,20 +14,22 @@ class TimestampController {
 
     const { username, timestamp, status, userId } = body;
 
-    const timestampData: TimestampData = { username, timestamp, userId, status };
+    const timestampData: TimestampData = {
+      username,
+      timestamp,
+      userId,
+      status
+    };
 
     try {
       await supabaseService.addNewTimestamp(timestampData);
       return { message: 'POSTED' };
-    } catch (error: any) {
+    } catch (error) {
       return { message: error };
     }
   }
 
-  async getFrequencyRoute(
-    frequency: Frequency,
-    freqValue: Month | number,
-  ) {
+  async getFrequencyRoute(frequency: Frequency, freqValue: Month | number) {
     const epochStartValue = Date.UTC(
       2022,
       Object.values(Month).indexOf(freqValue as Month),
@@ -116,6 +119,25 @@ class TimestampController {
     });
 
     return response.filter((series) => series.name !== undefined);
+  }
+
+  async getSearchUser(userId: string) {
+    const supabaseService = SupabaseService.getService();
+    return await supabaseService.searchUser(userId);
+  }
+
+  async postCreateUser(body: UserBody) {
+    const supabaseService = SupabaseService.getService();
+    const { userId, username } = body;
+
+    const userData: UserData = { userId, username };
+
+    try {
+      await supabaseService.createUser(userData);
+      return { message: `User ${username} is created with id ${userId}` };
+    } catch (error) {
+      return { message: error };
+    }
   }
 }
 

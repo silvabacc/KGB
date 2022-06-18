@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { getConfig } from '../getConfig';
-import { TimestampData } from './dto';
+import { TimestampData, UserData } from './dto';
 
 const { SUPABASE_KEY, SUPABASE_URL } = getConfig();
 
@@ -26,6 +26,22 @@ export class SupabaseService {
       .gte('timestamp', epochStartValue)
       .lte('timestamp', epochEndValue)
       .order('timestamp', { ascending: true });
+  }
+
+  async searchUser(userId: string) {
+    const response = await this.client
+      .from<UserData>('users')
+      .select('userId,username')
+      .eq('userId', userId);
+    if (response.data?.length === 0) {
+      return { message: 'User not found', data: [] };
+    }
+    return { data: response.data };
+  }
+
+  async createUser(userData: UserData) {
+    const { userId, username } = userData;
+    await this.client.from('users').insert([{ userId, username }]);
   }
 
   public static getService() {

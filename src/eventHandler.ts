@@ -1,13 +1,34 @@
 import { Client, VoiceState } from 'discord.js';
+import { stringify } from 'querystring';
 import { getConfig } from './config/getConfig';
 import { httpRequest } from './httpService/http';
 import { TimestampBody } from './httpService/types';
+import { SearchUserResponse, UserData } from './types';
 const { KGB_API_URL } = getConfig();
 
 enum Status {
   CONNECTED = 'CONNECTED',
   DISCONNECTED = 'DISCONNECTED'
 }
+
+const timestampBody = (
+  oldState: VoiceState,
+  newState: VoiceState
+): TimestampBody => {
+  return {
+    username: oldState.member?.displayName || '',
+    userId: oldState.member?.id || '',
+    timestamp: new Date().getTime(),
+    status: newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED
+  } as TimestampBody;
+};
+
+const createUserBody = (state: VoiceState) => {
+  return {
+    userId: state.member?.id,
+    username: state.member?.displayName
+  };
+};
 
 /**
  * EventHandler handles all Discord events in one place by taking a Discord client and attaches
@@ -59,16 +80,24 @@ class EventHandler {
     this.client.on(
       'voiceStateUpdate',
       async (oldState: VoiceState, newState: VoiceState) => {
-        const requestBody: TimestampBody = {
-          username: oldState.member?.displayName || '',
-          userId: oldState.member?.id || '',
-          timestamp: new Date().getTime(),
-          status:
-            newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED
-        };
-        const response = await httpRequest(
+        //Check if user is already stored
+        const searchUserResponse: SearchUserResponse = await httpRequest(
+          'get',
+          `${KGB_API_URL}/user/search/${oldState.member?.id}`
+        );
+
+        if (searchUserResponse.data.length === 0) {
+          httpRequest(
+            'post',
+            `${KGB_API_URL}/user/create`,
+            createUserBody(oldState)
+          );
+        }
+
+        httpRequest(
+          'post',
           `${KGB_API_URL}/timestamp`,
-          requestBody
+          timestampBody(oldState, newState)
         );
       }
     );

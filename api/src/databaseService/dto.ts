@@ -5,6 +5,11 @@ export interface TimestampData {
   status: string;
 }
 
+export interface UserData {
+  username: string;
+  userId: string;
+}
+
 export interface TimeSerie {
   name: string;
   data: number[];

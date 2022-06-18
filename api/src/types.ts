@@ -30,3 +30,8 @@ export interface TimestampBody {
   timestamp: number;
   status: Status;
 }
+
+export interface UserBody {
+  username: string;
+  userId: string;
+}

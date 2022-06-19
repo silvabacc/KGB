@@ -1,11 +1,11 @@
 import { RequestHandler, Request, Response } from 'express';
-import TimestampController from '../controllers/timestampController';
+import UserController from '../controllers/userController';
 
 export const searchHandler: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const controller = new TimestampController();
+  const controller = new UserController();
   const { params } = req;
 
 
@@ -17,7 +17,7 @@ export const createHandler: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const controller = new TimestampController();
+  const controller = new UserController();
   const { body } = req;
 
   const response = await controller.postCreateUser(body);

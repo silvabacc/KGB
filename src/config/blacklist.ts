@@ -1,1 +1,1 @@
-const blacklistIds = [];
+const blacklistIds = ['756161413990580329', '184405311681986560'];

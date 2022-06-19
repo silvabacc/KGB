@@ -105,3 +105,4 @@ dist
 
 #Swagger autogen
 swagger_output.json
+api/scripts/script.ts

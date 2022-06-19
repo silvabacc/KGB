@@ -1,13 +1,8 @@
 import { Router } from 'express';
-import {
-  frequencyHandler,
-  timestampsHandler
-} from '../handler/timestampHandler';
+import {} from '../handler/timestampHandler';
 import { searchHandler, createHandler } from '../handler/userHandler';
 import {
-    validateCreateUser,
-  validateFrequencyRoute,
-  validateTimestampRoute,
+  validateCreateUser,
   validateUserId
 } from '../validations/routeValidations';
 

@@ -6,7 +6,7 @@ import {
   TimestampData,
   UserData
 } from '../databaseService/dto';
-import { Frequency, Month, Status, TimestampBody, UserBody } from '../types';
+import { Frequency, Month, Status, TimestampBody } from '../types';
 
 class TimestampController {
   async postTimestampRoute(body: TimestampBody) {

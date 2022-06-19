@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { request } from 'http';
 import Joi from 'joi';
 import { Frequency, Month, Status } from '../types';
 
@@ -23,7 +22,7 @@ export const userIdSchema = Joi.object({
 
 export const userSchema = Joi.object({
   userId: Joi.number().unsafe().required(),
-  username: Joi.string().required(),
+  username: Joi.string().required()
 });
 
 export const validateTimestampRoute = (
@@ -60,7 +59,7 @@ export const validateUserId = (
 ) => {
   const { params } = req;
   const validationResult = userIdSchema.validate(params);
-  
+
   if (validationResult.error) {
     res.status(400).send(`Validation Error: ${validationResult.error.message}`);
   }
@@ -74,7 +73,7 @@ export const validateCreateUser = (
 ) => {
   const { body } = req;
   const validationResult = userSchema.validate(body);
-  
+
   if (validationResult.error) {
     res.status(400).send(`Validation Error: ${validationResult.error.message}`);
   }

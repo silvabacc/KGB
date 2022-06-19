@@ -45,7 +45,7 @@ const swagger = {
           '200': {
             description: 'OK',
             response: {
-              'message:': 'POSTED'
+               message: 'User JohnSmith123 is created with id 123456789',
             }
           },
           '400': {
@@ -98,6 +98,67 @@ const swagger = {
                   }
                 ]
               }
+            }
+          },
+          '400': {
+            description: 'Bad Request'
+          }
+        }
+      }
+    },
+    '/user/search/{userId}': {
+      get: {
+        description: 'Searches for a user ID',
+        parameters: [
+          {
+            name: 'userId',
+            in: 'path',
+            required: true,
+            type: 'number'
+          },
+        ],
+        responses: {
+          '200': {
+            description: 'OK',
+            response: {
+              data: [{username: 'JohnSmith', userId: '123456789'}]
+            }
+          },
+          '400': {
+            description: 'Bad Request'
+          }
+        }
+      }
+    },
+    '/user/create': {
+      post: {
+        description: 'Appends a new user to the User table (creates a new user)',
+        parameters: [
+          {
+            in: 'body',
+            name: 'body',
+            description: '',
+            required: false,
+            schema: {
+              type: 'object',
+              properties: {
+                username: {
+                  type: 'JohnSmith123'
+                },
+                userId: {
+                  type: '12345678',
+                },
+              },
+              required: ['username', 'userId'],
+              additionalProperties: false
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'OK',
+            response: {
+              'message:': 'POSTED'
             }
           },
           '400': {

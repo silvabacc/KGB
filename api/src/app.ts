@@ -19,7 +19,7 @@ app.set('port', PORT);
 app.use(express.json());
 app.use(cors());
 
-app.use('/timestamps', timestampRoutes);
+app.use('/timestamp', timestampRoutes);
 app.use('/user', userRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

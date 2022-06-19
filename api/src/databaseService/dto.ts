@@ -12,6 +12,7 @@ export interface UserData {
 
 export interface TimeSerie {
   name: string;
+  userId: string;
   data: number[];
 }
 

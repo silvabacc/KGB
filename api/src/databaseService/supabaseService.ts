@@ -36,7 +36,7 @@ export class SupabaseService {
     if (response.data?.length === 0) {
       return { message: 'User not found', data: [] };
     }
-    return { data: response.data };
+    return { data: response.data || [] };
   }
 
   async createUser(userData: UserData) {

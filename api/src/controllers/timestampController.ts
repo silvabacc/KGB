@@ -56,18 +56,39 @@ class TimestampController {
       return timestampResponse.error;
     }
 
-    const users = new Set<string>();
+    //Gather all the User IDs
+    const userIds = new Set<string>();
     timestampResponse.data.map((data) => {
-      users.add(data.username);
+      userIds.add(data.userId);
     });
+
+    //Search for the user based on ID and return User Data
+    let users: UserData[] = [];
+    for (const id of userIds) {
+      const user = await supabaseService.searchUser(id);
+      if (user.data.length === 0) {
+        users = [
+          ...users,
+          { username: 'Unknown User', userId: 'Unknown User ID' }
+        ];
+      } else {
+        users = [
+          ...users,
+          {
+            username: user.data[0].username,
+            userId: user.data[0].userId
+          }
+        ];
+      }
+    }
 
     let series: TimeSerie[] = [];
     let response: TimeSeriesResponse[] = [];
 
-    users.forEach((name) => {
-      const usersData = timestampResponse.data.filter(
-        (data) => data.username === name
-      );
+    users.forEach((user) => {
+      const usersData = timestampResponse.data.filter((data) => {
+        return data.userId === user.userId;
+      });
 
       let foundConnected = false;
       const timestamps = usersData.reduce((previous, next) => {
@@ -99,14 +120,27 @@ class TimestampController {
 
         const hours = (timestamps[i + 1] - timestamps[i]) / (1000 * 60 * 60);
 
-        series = [...series, { name, data: [currentLabel, hours] }];
+        series = [
+          ...series,
+          {
+            name: user.username,
+            userId: user.userId,
+            data: [currentLabel, hours]
+          }
+        ];
       }
     });
 
-    users.forEach((name) => {
-      const userBlock = { name, data: [] as number[][], monthly: 0 };
+    users.forEach((user) => {
+      const userBlock = {
+        name: user.username,
+        data: [] as number[][],
+        monthly: 0
+      };
 
-      const usersData = series.filter((timeseries) => timeseries.name === name);
+      const usersData = series.filter(
+        (timeseries) => timeseries.userId === user.userId
+      );
 
       usersData.map((serie) => {
         if (!isNaN(serie.data[1])) {

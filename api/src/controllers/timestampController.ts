@@ -155,7 +155,7 @@ class TimestampController {
       response = [...response, userBlock];
     });
 
-    return response.filter((series) => series.name !== undefined);
+    return response.filter((series) => series.name !== undefined || series.name === UNKNOWN_USER);
   }
 
   async getSearchUser(userId: string) {

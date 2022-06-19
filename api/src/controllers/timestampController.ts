@@ -8,9 +8,6 @@ import {
 } from '../databaseService/dto';
 import { Frequency, Month, Status, TimestampBody, UserBody } from '../types';
 
-const UNKNOWN_USER = 'UNKNOWN_USER';
-const UNKNOWN_ID = 'UNKNOWN_ID'
-
 class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
     const supabaseService = SupabaseService.getService();
@@ -70,10 +67,7 @@ class TimestampController {
     for (const id of userIds) {
       const user = await supabaseService.searchUser(id);
       if (user.data.length === 0) {
-        users = [
-          ...users,
-          { username: UNKNOWN_USER, userId: UNKNOWN_ID }
-        ];
+        continue
       } else {
         users = [
           ...users,
@@ -155,7 +149,7 @@ class TimestampController {
       response = [...response, userBlock];
     });
 
-    return response.filter((series) => series.name !== undefined || series.name !== UNKNOWN_USER);
+    return response.filter((series) => series.name !== undefined);
   }
 
   async getSearchUser(userId: string) {

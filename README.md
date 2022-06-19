@@ -31,7 +31,6 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 2. Install dependecies via `npm install`
 3. Create an .env file and copy the values from env.defaults
    * Default port is `4000`
-   * You can ignore the GCP variables as this project is moving away from Firebase
    * To get Supabase credentials (assuming you've followed the Set up Supabase step): 
       * go to the Supabase project dashboard [here](https://app.supabase.io/).
       * Go to APIs, then Authentication tab 

@@ -80,12 +80,18 @@ class EventHandler {
     this.client.on(
       'voiceStateUpdate',
       async (oldState: VoiceState, newState: VoiceState) => {
+        //Blacklist users
+        if(oldState.member?.id && blacklistIds.includes(oldState.member?.id)){
+          return;
+        }
+
         //Check if user is already stored
         const searchUserResponse: SearchUserResponse = await httpRequest(
           'get',
           `${KGB_API_URL}/user/search/${oldState.member?.id}`
         );
 
+        //if user doesn't exist, add to the users table
         if (searchUserResponse.data.length === 0) {
           httpRequest(
             'post',
@@ -94,6 +100,7 @@ class EventHandler {
           );
         }
 
+        //Post the new Timestamp
         httpRequest(
           'post',
           `${KGB_API_URL}/timestamp`,

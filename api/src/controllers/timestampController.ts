@@ -8,6 +8,9 @@ import {
 } from '../databaseService/dto';
 import { Frequency, Month, Status, TimestampBody, UserBody } from '../types';
 
+const UNKNOWN_USER = 'UNKNOWN_USER';
+const UNKNOWN_ID = 'UNKNOWN_ID'
+
 class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
     const supabaseService = SupabaseService.getService();
@@ -69,7 +72,7 @@ class TimestampController {
       if (user.data.length === 0) {
         users = [
           ...users,
-          { username: 'Unknown User', userId: 'Unknown User ID' }
+          { username: UNKNOWN_USER, userId: UNKNOWN_ID }
         ];
       } else {
         users = [

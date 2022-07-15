@@ -1,9 +1,9 @@
 import { Client, VoiceState } from 'discord.js';
-import { stringify } from 'querystring';
 import { getConfig } from './config/getConfig';
 import { httpRequest } from './httpService/http';
 import { TimestampBody } from './httpService/types';
-import { SearchUserResponse, UserData } from './types';
+import { SearchUserResponse } from './types';
+import { blacklistIds } from './config/blacklist';
 const { KGB_API_URL } = getConfig();
 
 enum Status {

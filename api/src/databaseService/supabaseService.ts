@@ -39,6 +39,17 @@ export class SupabaseService {
     return { data: response.data || [] };
   }
 
+  async searchUsers(userIds: string[]) {
+    const response = await this.client
+      .from<UserData>('users')
+      .select('userId,username')
+      .in('userId', userIds);
+    if (response.data?.length === 0) {
+      return { message: 'User not found', data: [] };
+    }
+    return { data: response.data || [] };
+  }
+
   async createUser(userData: UserData) {
     const { userId, username } = userData;
     await this.client.from('users').insert([{ userId, username }]);

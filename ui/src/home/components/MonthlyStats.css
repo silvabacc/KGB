@@ -5,14 +5,18 @@
 
 .Header {
   font-weight: bold;
+  color: rgb(106, 106, 106);
   box-sizing: border-box;
-  margin-bottom: 2px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #bbb;
+  line-height: 35px;
+  border-radius: 2px;
 }
 
 .List {
-  list-style-position: inside;
+  list-style: none;
   padding: 0px;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0px;
 }
 
@@ -21,5 +25,5 @@
 }
 
 .Hours {
-  color: chocolate;
+  font-weight: 700;
 }

@@ -1,5 +1,6 @@
 .MonthlyStatesWrapper {
   margin-top: 16px;
+  width: fit-content;
   height: 100%;
 }
 

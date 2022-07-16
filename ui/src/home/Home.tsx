@@ -37,7 +37,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className="Card Chart">
+      <div className="Card">
         <Select
           onChange={(value) => setSelectedMonth(value?.value as Month)}
           className="Select"

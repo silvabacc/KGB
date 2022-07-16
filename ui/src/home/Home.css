@@ -3,11 +3,6 @@
   padding: 16px;
   border-radius: 10px;
   box-shadow: 1px 1px 1px 1px #e7e7e7;
-  width: fit-content;
-}
-
-.Chart {
-  width: 100%;
 }
 
 .Select {

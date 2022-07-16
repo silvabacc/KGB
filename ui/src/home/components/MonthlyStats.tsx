@@ -1,4 +1,5 @@
-import './monthlyStats.css';
+import './MonthlyStats.css';
+import '../Home.css'
 import React from 'react';
 import { Month } from '../types';
 import { TimeSeriesResponse } from '../../responseTypes';
@@ -15,7 +16,7 @@ const MonthlyStats: React.FC<MonthlyStatsProps> = ({ monthSelected, data }) => {
 
   return (
     <>
-      <div className="MonthlyStatesWrapper">
+      <div className="Card MonthlyStatesWrapper">
         <div className="Header">Total stats for {monthSelected} </div>
         <ol className="List">
           {data.length ? (
@@ -24,15 +25,14 @@ const MonthlyStats: React.FC<MonthlyStatsProps> = ({ monthSelected, data }) => {
               .map((user) => {
                 return (
                   <li className="Individuals">
-                    {user.name} -{' '}
-                    <span className="Hours">
-                      {user.monthly.toFixed(1)} hours{' '}
-                    </span>
+                    {user.name} with {' '}
+                      <span className="Hours">{user.monthly.toFixed(1)}</span>{' '}
+                      hours{' '}
                   </li>
                 );
               })
           ) : (
-            <div className='Individuals'>There are no stats for this month</div>
+            <div className="Individuals">There are no stats for this month</div>
           )}
         </ol>
       </div>

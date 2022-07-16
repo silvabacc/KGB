@@ -9,7 +9,7 @@ import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
 import useFetch from '../hooks/useFetch';
 import { KGB_API_URL } from '../constants';
 import { useEffect } from 'react';
-import MonthlyStats from './components/monthlyStats';
+import MonthlyStats from './components/MonthlyStats';
 import Loading from '../commonComponents/loading';
 
 NoDataToDisplay(Highcharts);
@@ -37,36 +37,38 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Select
-        onChange={(value) => setSelectedMonth(value?.value as Month)}
-        className="Select"
-        value={monthsOptions.filter(
-          (monthOption) => monthOption.value === selectedMonth
+      <div className="Card Chart">
+        <Select
+          onChange={(value) => setSelectedMonth(value?.value as Month)}
+          className="Select"
+          value={monthsOptions.filter(
+            (monthOption) => monthOption.value === selectedMonth
+          )}
+          defaultValue={monthsOptions[today.getMonth()]}
+          options={monthsOptions}
+        />
+        {!isLoading ? (
+          <>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={getChartOptions(
+                Object.keys(Month).indexOf(selectedMonth),
+                today.getFullYear(),
+                data,
+                `${selectedMonth} hours`,
+                '',
+                'Day',
+                'Number of Hours'
+              )}
+            />
+          </>
+        ) : (
+          <div className="Loading">
+            <Loading />
+          </div>
         )}
-        defaultValue={monthsOptions[today.getMonth()]}
-        options={monthsOptions}
-      />
-      {!isLoading ? (
-        <>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={getChartOptions(
-              Object.keys(Month).indexOf(selectedMonth),
-              today.getFullYear(),
-              data,
-              `${selectedMonth} hours`,
-              '',
-              'Day',
-              'Number of Hours'
-            )}
-          />
-          <MonthlyStats data={data} monthSelected={selectedMonth} />
-        </>
-      ) : (
-        <div className="Loading">
-          <Loading />
-        </div>
-      )}
+      </div>
+      {!isLoading && <MonthlyStats data={data} monthSelected={selectedMonth} />}
     </>
   );
 };

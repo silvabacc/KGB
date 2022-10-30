@@ -15,11 +15,13 @@ const timestampBody = (
   oldState: VoiceState,
   newState: VoiceState
 ): TimestampBody => {
+  const date = new Date();
   return {
     username: oldState.member?.displayName || '',
     userId: oldState.member?.id || '',
-    timestamp: new Date().getTime(),
-    status: newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED
+    timestamp: date.getTime(),
+    status: newState.channel === null ? Status.DISCONNECTED : Status.CONNECTED,
+    dateText: date.toLocaleString()
   } as TimestampBody;
 };
 
@@ -81,7 +83,7 @@ class EventHandler {
       'voiceStateUpdate',
       async (oldState: VoiceState, newState: VoiceState) => {
         //Blacklist users
-        if(oldState.member?.id && blacklistIds.includes(oldState.member?.id)){
+        if (oldState.member?.id && blacklistIds.includes(oldState.member?.id)) {
           return;
         }
 

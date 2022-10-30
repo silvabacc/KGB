@@ -6,7 +6,6 @@ export enum Status {
 export enum Frequency {
   MONTHLY = 'monthly',
   WEEKLY = 'weekly'
-
 }
 
 export enum Month {
@@ -21,7 +20,7 @@ export enum Month {
   Sept = 'Sept',
   Oct = 'Oct',
   Nov = 'Nov',
-  Dev = 'Dev',
+  Dev = 'Dev'
 }
 
 export interface TimestampBody {
@@ -29,6 +28,7 @@ export interface TimestampBody {
   userId: string;
   timestamp: number;
   status: Status;
+  dateText: string;
 }
 
 export interface UserBody {

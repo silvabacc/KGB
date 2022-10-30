@@ -8,7 +8,8 @@ export const timestampBodySchema = Joi.object({
   userId: Joi.string().required(),
   status: Joi.string()
     .valid(...Object.values(Status))
-    .required()
+    .required(),
+  dateText: Joi.string().optional()
 });
 
 export const frequencySchema = Joi.object({

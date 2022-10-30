@@ -12,13 +12,14 @@ class TimestampController {
   async postTimestampRoute(body: TimestampBody) {
     const supabaseService = SupabaseService.getService();
 
-    const { username, timestamp, status, userId } = body;
+    const { username, timestamp, status, userId, dateText } = body;
 
     const timestampData: TimestampData = {
       username,
       timestamp,
       userId,
-      status
+      status,
+      dateText
     };
 
     try {
@@ -63,7 +64,9 @@ class TimestampController {
     });
 
     //Search for the user based on ID and return User Data
-    let users: UserData[] =  (await supabaseService.searchUsers(Array.from(userIds))).data;
+    let users: UserData[] = (
+      await supabaseService.searchUsers(Array.from(userIds))
+    ).data;
 
     let series: TimeSerie[] = [];
     let response: TimeSeriesResponse[] = [];

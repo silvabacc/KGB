@@ -3,6 +3,7 @@ export interface TimestampData {
   userId: string;
   timestamp: number;
   status: string;
+  dateText: string;
 }
 
 export interface UserData {
@@ -18,6 +19,6 @@ export interface TimeSerie {
 
 export interface TimeSeriesResponse {
   name: string;
-  data: number[][]
+  data: number[][];
   monthly: number;
 }

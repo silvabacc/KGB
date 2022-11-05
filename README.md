@@ -16,10 +16,10 @@ This repoistory contains three applications, which are the `KGB Application`, `B
 * Set up your own Supabase project
 
 # Set Up Bot
-1. Install dependecies via `npm install`
+1. Install dependecies via `npm install` or `yarn install`
 2. Create an .env file and copy the values from env.defaults 
     * Add your Discord token in the .env. Guide on how to create a Discord token found [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
-3. Run the application by `npm run dev`
+3. Run the application by `yarn dev`
 
 # Set up Supabase
 1. Go to [Supabase](https://app.supabase.io/) and set up your own personal project

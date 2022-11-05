@@ -6,7 +6,7 @@ My own version of the app working on my discord server [here](https://kgb-ui-pro
 My own version of the API working with [Swagger UI](https://kgb-api-production.up.railway.app/api-docs/).
 
 ## Structure of KGB
-![image](https://github.com/k-h-f/KGB/blob/master/docs/images/architecture.png)
+![image](https://github.com/k-h-f/KGB/blob/master/docs/images/kgb-architecture.png)
 
 This repoistory contains three applications, which are the `KGB Application`, `Backend API` and `Visualisation Web Application`. You can find the `KGB Application` at the root of this repository, the `Backend Api` inside `api` folder and the `Visualisation Web Application` in the `ui` folder.
 

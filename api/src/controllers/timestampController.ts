@@ -64,7 +64,7 @@ class TimestampController {
     });
 
     //Search for the user based on ID and return User Data
-    let users: UserData[] = (
+    const users: UserData[] = (
       await supabaseService.searchUsers(Array.from(userIds))
     ).data;
 

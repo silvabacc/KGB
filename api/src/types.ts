@@ -20,7 +20,7 @@ export enum Month {
   Sept = 'Sept',
   Oct = 'Oct',
   Nov = 'Nov',
-  Dev = 'Dev'
+  Dec = 'Dec'
 }
 
 export interface TimestampBody {
